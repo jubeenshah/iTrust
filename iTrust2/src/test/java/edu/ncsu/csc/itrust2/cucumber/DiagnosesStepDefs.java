@@ -6,10 +6,9 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
@@ -100,7 +99,6 @@ public class DiagnosesStepDefs extends CucumberTest {
         attemptLogout();
 
         /* Create patient record */
-
         final Patient patient = new Patient();
         patient.setSelf( User.getByName( "patient" ) );
         patient.setFirstName( name.split( " " )[0] );
@@ -111,12 +109,7 @@ public class DiagnosesStepDefs extends CucumberTest {
         patient.setState( State.CA );
         patient.setZip( "91505" );
         patient.setPhone( "123-456-7890" );
-        final SimpleDateFormat sdf = new SimpleDateFormat( "MM/DD/YYYY", Locale.ENGLISH );
-
-        final Calendar time = Calendar.getInstance();
-        time.setTime( sdf.parse( birthday ) );
-
-        patient.setDateOfBirth( time );
+        patient.setDateOfBirth( LocalDate.parse( birthday, DateTimeFormatter.ofPattern("MM/dd/yyyy") ) );
 
         patient.save();
 

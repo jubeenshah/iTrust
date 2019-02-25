@@ -24,6 +24,7 @@ import edu.ncsu.csc.itrust2.utils.LoggerUtil;
  * primary key id of the office visit requested.
  *
  * @author Kai Presler-Marshall
+ * @author Jack MacDonald
  *
  */
 @RestController

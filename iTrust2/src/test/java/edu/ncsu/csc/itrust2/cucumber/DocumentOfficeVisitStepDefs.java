@@ -5,10 +5,9 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 import java.util.logging.Level;
 
@@ -67,12 +66,7 @@ public class DocumentOfficeVisitStepDefs extends CucumberTest {
         patient.setState( State.DE );
         patient.setZip( "91505" );
         patient.setPhone( "123-456-7890" );
-        final SimpleDateFormat sdf = new SimpleDateFormat( "MM/DD/YYYY", Locale.ENGLISH );
-
-        final Calendar time = Calendar.getInstance();
-        time.setTime( sdf.parse( "08/13/1871" ) );
-
-        patient.setDateOfBirth( time );
+        patient.setDateOfBirth( LocalDate.parse( "1871-08-13" ) );
 
         patient.save();
 
@@ -149,7 +143,7 @@ public class DocumentOfficeVisitStepDefs extends CucumberTest {
         final WebElement hospital = driver.findElement( By.name( "hospital" ) );
         hospital.click();
 
-        fillInDateTime( "date", "12/19/2027", "time", "9:30 AM");
+        fillInDateTime( "date", "12/19/2027", "time", "9:30 AM" );
 
         waitForAngular();
 
@@ -208,7 +202,7 @@ public class DocumentOfficeVisitStepDefs extends CucumberTest {
         final WebElement hospital = driver.findElement( By.name( "hospital" ) );
         hospital.click();
 
-        fillInDateTime( "date", "12/19/2027", "time", "9:30 AM");
+        fillInDateTime( "date", "12/19/2027", "time", "9:30 AM" );
 
         waitForAngular();
 
@@ -383,11 +377,7 @@ public class DocumentOfficeVisitStepDefs extends CucumberTest {
         patient.setState( State.CA );
         patient.setZip( "91505" );
         patient.setPhone( "123-456-7890" );
-
-        final Calendar cal = Calendar.getInstance();
-        final SimpleDateFormat sdf = new SimpleDateFormat( "MM/dd/yyyy", Locale.ENGLISH );
-        cal.setTime( sdf.parse( birthday ) );
-        patient.setDateOfBirth( cal );
+        patient.setDateOfBirth( LocalDate.parse( birthday, DateTimeFormatter.ofPattern( "MM/dd/yyyy" ) ) );
 
         patient.save();
 
@@ -432,7 +422,7 @@ public class DocumentOfficeVisitStepDefs extends CucumberTest {
         final WebElement hospital = driver.findElement( By.name( "hospital" ) );
         hospital.click();
 
-        fillInDateTime( "date", dateString, "time", "9:30 AM");
+        fillInDateTime( "date", dateString, "time", "9:30 AM" );
 
         expectedBhm = new BasicHealthMetrics();
 

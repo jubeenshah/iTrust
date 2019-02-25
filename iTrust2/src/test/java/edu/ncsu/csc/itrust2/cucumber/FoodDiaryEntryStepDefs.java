@@ -49,8 +49,12 @@ public class FoodDiaryEntryStepDefs extends CucumberTest {
     private void clickAndCheckDateButton( String viewDate ) {
         List<WebElement> radioList = driver.findElements( By.name( "date" ) );
 
+        // Convert MM/dd/yyyy to yyyy-MM-dd
+        final String[] dateComponents = viewDate.split("/");
+        final String dateValue = String.format("%s-%s-%s", dateComponents[2], dateComponents[0], dateComponents[1]);
+
         for ( WebElement element : radioList ) {
-            if ( element.getAttribute( "value" ).equals( viewDate ) ) {
+            if ( element.getAttribute( "value" ).equals( dateValue ) ) {
                 element.click();
                 assertTextPresent( "Food Diary Entries for: " + viewDate );
                 return;

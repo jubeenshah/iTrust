@@ -1,8 +1,8 @@
 package edu.ncsu.csc.itrust2.models.enums;
 
 /**
- * Enum for different types of Meals.
- *
+ * Enum for different types of Meals
+ * 
  * @author Brendan Boss (blboss)
  *
  */

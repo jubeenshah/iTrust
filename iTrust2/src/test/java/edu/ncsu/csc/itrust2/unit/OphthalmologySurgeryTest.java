@@ -3,19 +3,17 @@ package edu.ncsu.csc.itrust2.unit;
 import static org.junit.Assert.assertEquals;
 
 import java.text.ParseException;
-import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 
 import org.junit.Test;
 
 import edu.ncsu.csc.itrust2.forms.hcp.OphthalmologySurgeryForm;
 import edu.ncsu.csc.itrust2.models.enums.AppointmentType;
+import edu.ncsu.csc.itrust2.models.enums.EyeSurgeryType;
 import edu.ncsu.csc.itrust2.models.enums.HouseholdSmokingStatus;
 import edu.ncsu.csc.itrust2.models.enums.PatientSmokingStatus;
-import edu.ncsu.csc.itrust2.models.enums.EyeSurgeryType;
 import edu.ncsu.csc.itrust2.models.persistent.BasicHealthMetrics;
-import edu.ncsu.csc.itrust2.models.persistent.Diagnosis;
 import edu.ncsu.csc.itrust2.models.persistent.DomainObject;
-import edu.ncsu.csc.itrust2.models.persistent.GeneralCheckup;
 import edu.ncsu.csc.itrust2.models.persistent.Hospital;
 import edu.ncsu.csc.itrust2.models.persistent.OphthalmologySurgery;
 import edu.ncsu.csc.itrust2.models.persistent.User;
@@ -33,12 +31,6 @@ public class OphthalmologySurgeryTest {
 
         final Hospital hosp = new Hospital( "Dr. Jenkins' Insane Asylum", "123 Main St", "12345", "NC" );
         hosp.save();
-
-        Diagnosis.getForPatient( "AliceThirteen" ).stream().forEach( e -> e.delete() );
-
-        GeneralCheckup.getForPatient( "AliceThirteen" ).stream().forEach( e -> e.delete() );
-
-        BasicHealthMetrics.getBasicHealthMetricsForPatient( "AliceThirteen" ).stream().forEach( e -> e.delete() );
 
         final OphthalmologySurgery visit = new OphthalmologySurgery();
 
@@ -63,11 +55,11 @@ public class OphthalmologySurgeryTest {
         visit.setHospital( hosp );
         visit.setPatient( User.getByName( "AliceThirteen" ) );
         visit.setHcp( User.getByName( "bobbyOD" ) );
-        visit.setDate( OffsetDateTime.now() );
+        visit.setDate( ZonedDateTime.now() );
         visit.save();
 
-        visit.setVisualAcuityOD( "20/20" );
-        visit.setVisualAcuityOS( "20/40" );
+        visit.setVisualAcuityOD( 20 );
+        visit.setVisualAcuityOS( 40 );
         visit.setSphereOD( 1.5 );
         visit.setSphereOS( -1.5 );
         visit.setCylinderOD( 1.0 );
@@ -140,8 +132,8 @@ public class OphthalmologySurgeryTest {
         visit.setHouseSmokingStatus( HouseholdSmokingStatus.NONSMOKING );
         visit.setPatientSmokingStatus( PatientSmokingStatus.NEVER );
 
-        visit.setVisualAcuityOD( "20/20" );
-        visit.setVisualAcuityOS( "20/40" );
+        visit.setVisualAcuityOD( 20 );
+        visit.setVisualAcuityOS( 40 );
         visit.setSphereOD( 1.5 );
         visit.setSphereOS( -1.5 );
         visit.setCylinderOD( 1.0 );

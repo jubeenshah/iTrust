@@ -41,11 +41,10 @@ public class DBUtil {
 
         }
         catch ( final Exception e ) {
-            System.out.println( "Unable to find `.properties` file for database!" );
             e.printStackTrace();
             // The file couldn't be loaded
             // Set some default values and maybe we'll get lucky
-            url = "jdbc:mysql://localhost:3306/iTrust2?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=EST&allowPublicKeyRetrieval=true";
+            url = "jdbc:mysql://localhost:3306/iTrust2?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=EST";
             username = "root";
             password = "";
         }
@@ -79,7 +78,7 @@ public class DBUtil {
     }
 
     /**
-     * Provides a connection to the db using the DataSource above. MAKE SURE TO
+     * Provices a connection to the db using the DataSource above. MAKE SURE TO
      * CLOSE THE CONNECTION WHEN YOU ARE DONE WITH IT.
      *
      * @return database connection

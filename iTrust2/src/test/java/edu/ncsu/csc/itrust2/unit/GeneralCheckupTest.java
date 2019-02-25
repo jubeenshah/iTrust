@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -63,7 +63,7 @@ public class GeneralCheckupTest {
         visit.setHospital( hosp );
         visit.setPatient( User.getByName( "AliceThirteen" ) );
         visit.setHcp( User.getByName( "hcp" ) );
-        visit.setDate( OffsetDateTime.now() );
+        visit.setDate( ZonedDateTime.now() );
         visit.save();
 
         final List<Diagnosis> diagnoses = new Vector<Diagnosis>();

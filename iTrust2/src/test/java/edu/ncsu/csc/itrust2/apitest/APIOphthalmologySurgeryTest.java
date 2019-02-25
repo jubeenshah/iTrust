@@ -13,7 +13,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 
-import edu.ncsu.csc.itrust2.models.enums.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,19 +31,29 @@ import edu.ncsu.csc.itrust2.forms.admin.UserForm;
 import edu.ncsu.csc.itrust2.forms.hcp.OphthalmologySurgeryForm;
 import edu.ncsu.csc.itrust2.forms.hcp_patient.PatientForm;
 import edu.ncsu.csc.itrust2.forms.patient.AppointmentRequestForm;
+import edu.ncsu.csc.itrust2.models.enums.AppointmentType;
+import edu.ncsu.csc.itrust2.models.enums.BloodType;
+import edu.ncsu.csc.itrust2.models.enums.Ethnicity;
+import edu.ncsu.csc.itrust2.models.enums.EyeSurgeryType;
+import edu.ncsu.csc.itrust2.models.enums.Gender;
+import edu.ncsu.csc.itrust2.models.enums.HouseholdSmokingStatus;
+import edu.ncsu.csc.itrust2.models.enums.PatientSmokingStatus;
+import edu.ncsu.csc.itrust2.models.enums.Role;
+import edu.ncsu.csc.itrust2.models.enums.State;
+import edu.ncsu.csc.itrust2.models.enums.Status;
 import edu.ncsu.csc.itrust2.models.persistent.BasicHealthMetrics;
 import edu.ncsu.csc.itrust2.models.persistent.DomainObject;
-import edu.ncsu.csc.itrust2.models.persistent.OphthalmologySurgery;
 import edu.ncsu.csc.itrust2.models.persistent.Hospital;
 import edu.ncsu.csc.itrust2.models.persistent.OfficeVisit;
+import edu.ncsu.csc.itrust2.models.persistent.OphthalmologySurgery;
 import edu.ncsu.csc.itrust2.models.persistent.Patient;
 import edu.ncsu.csc.itrust2.models.persistent.User;
 import edu.ncsu.csc.itrust2.mvc.config.WebMvcConfiguration;
 
 /**
- * Test for the API functionality for interacting with office visits
+ * Test for the API functionality for ophthalmology surgeries
  *
- * @author Kai Presler-Marshall
+ * @author Jack MacDonald
  *
  */
 @RunWith ( SpringJUnit4ClassRunner.class )
@@ -115,7 +124,9 @@ public class APIOphthalmologySurgeryTest {
         mvc.perform( delete( "/api/v1/appointmentrequests" ) );
 
         final AppointmentRequestForm appointmentForm = new AppointmentRequestForm();
-        appointmentForm.setDate( "2030-11-19T04:50:00.000-05:00" ); // 2030-11-19 4:50 AM EST
+        appointmentForm.setDate( "2030-11-19T04:50:00.000-05:00" ); // 2030-11-19
+                                                                    // 4:50 AM
+                                                                    // EST
         appointmentForm.setType( AppointmentType.GENERAL_OPHTHALMOLOGY.toString() );
         appointmentForm.setStatus( Status.APPROVED.toString() );
         appointmentForm.setHcp( "hcp" );

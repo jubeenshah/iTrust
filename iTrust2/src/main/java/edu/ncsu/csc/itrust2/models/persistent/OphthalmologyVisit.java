@@ -3,21 +3,27 @@ package edu.ncsu.csc.itrust2.models.persistent;
 import java.text.ParseException;
 
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 import edu.ncsu.csc.itrust2.forms.hcp.OphthalmologyVisitForm;
 
 /**
  * Abstracts any type of ophthalmolgy appointment
+ * 
  * @author Jack MacDonald
- *
  */
 @MappedSuperclass
 public abstract class OphthalmologyVisit extends OfficeVisit {
 
-    private String  visualAcuityOD;
+    @Min(20)
+    @Max(200)
+    private Integer  visualAcuityOD;
 
-    private String  visualAcuityOS;
-
+    @Min(20)
+    @Max(200)
+    private Integer  visualAcuityOS;
+    
     private Double  sphereOD;
 
     private Double  sphereOS;
@@ -59,7 +65,7 @@ public abstract class OphthalmologyVisit extends OfficeVisit {
      *
      * @return visual acuity for the left eye
      */
-    public String getVisualAcuityOD () {
+    public Integer getVisualAcuityOD () {
         return visualAcuityOD;
     }
 
@@ -69,7 +75,7 @@ public abstract class OphthalmologyVisit extends OfficeVisit {
      * @param visualAcuityOD
      *            visual acuity for the left eye
      */
-    public void setVisualAcuityOD ( String visualAcuityOD ) {
+    public void setVisualAcuityOD ( Integer visualAcuityOD ) {
         this.visualAcuityOD = visualAcuityOD;
     }
 
@@ -78,7 +84,7 @@ public abstract class OphthalmologyVisit extends OfficeVisit {
      *
      * @return visual acuity for the right eye
      */
-    public String getVisualAcuityOS () {
+    public Integer getVisualAcuityOS () {
         return visualAcuityOS;
     }
 
@@ -88,7 +94,7 @@ public abstract class OphthalmologyVisit extends OfficeVisit {
      * @param visualAcuityOS
      *            visual acuity for the right eye
      */
-    public void setVisualAcuityOS ( String visualAcuityOS ) {
+    public void setVisualAcuityOS ( Integer visualAcuityOS ) {
         this.visualAcuityOS = visualAcuityOS;
     }
 

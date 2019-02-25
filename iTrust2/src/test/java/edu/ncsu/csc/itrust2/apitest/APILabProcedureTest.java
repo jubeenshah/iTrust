@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDate;
-import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
@@ -164,7 +164,7 @@ public class APILabProcedureTest {
         visit.setHospital( hosp );
         visit.setPatient( User.getByName( "AliceThirteen" ) );
         visit.setHcp( User.getByName( "AliceThirteen" ) );
-        visit.setDate( OffsetDateTime.now() );
+        visit.setDate( ZonedDateTime.now() );
 
         final List<Diagnosis> diagnoses = new Vector<Diagnosis>();
 
@@ -267,7 +267,7 @@ public class APILabProcedureTest {
         visit.setHospital( hospital );
         visit.setPatient( User.getByName( "patient" ) );
         visit.setHcp( User.getByName( "patient" ) );
-        visit.setDate( OffsetDateTime.now() );
+        visit.setDate( ZonedDateTime.now() );
 
         final List<Diagnosis> diagnoses = new Vector<Diagnosis>();
 

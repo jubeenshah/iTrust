@@ -3,7 +3,6 @@ package edu.ncsu.csc.itrust2.utils;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.hibernate.boot.MetadataSources;
@@ -182,9 +181,7 @@ public class HibernateDataGenerator {
         billyUser.save();
         billy.setSelf( billyUser );
         billy.setLastName( "Bob" );
-        final Calendar billyBirth = Calendar.getInstance();
-        billyBirth.add( Calendar.YEAR, -40 ); // billy is 40 years old
-        billy.setDateOfBirth( billyBirth );
+        billy.setDateOfBirth( LocalDate.now().minusYears( 40 ) ); // 40 years old
         billy.save();
 
         final Patient jill = new Patient();
@@ -194,9 +191,7 @@ public class HibernateDataGenerator {
         jillUser.save();
         jill.setSelf( jillUser );
         jill.setLastName( "Bob" );
-        final Calendar jillBirth = Calendar.getInstance();
-        jillBirth.add( Calendar.YEAR, -40 ); // jill is 40 years old
-        jill.setDateOfBirth( jillBirth );
+        jill.setDateOfBirth( LocalDate.now().minusYears( 40 ) ); // 40 years old
         jill.save();
 
         /** Optometrist Bobby Ibajnup. Robort's twin brother. */
@@ -224,9 +219,7 @@ public class HibernateDataGenerator {
         tim.setSelf( timUser );
         tim.setFirstName( "TimTheOneYearOld" );
         tim.setLastName( "Smith" );
-        final Calendar timBirth = Calendar.getInstance();
-        timBirth.add( Calendar.YEAR, -1 ); // tim is one year old
-        tim.setDateOfBirth( timBirth );
+        tim.setDateOfBirth( LocalDate.now().minusYears( 1 ) ); // 1 year old
         tim.save();
 
         final Patient bob = new Patient();
@@ -236,9 +229,7 @@ public class HibernateDataGenerator {
         bobUser.save();
         bob.setSelf( bobUser );
         bob.setLastName( "Smith" );
-        final Calendar bobBirth = Calendar.getInstance();
-        bobBirth.add( Calendar.YEAR, -4 ); // bob is four years old
-        bob.setDateOfBirth( bobBirth );
+        bob.setDateOfBirth( LocalDate.now().minusYears( 4 ) ); // 4 years old
         bob.save();
 
         final Patient alice = new Patient();
@@ -248,9 +239,7 @@ public class HibernateDataGenerator {
         aliceUser.save();
         alice.setSelf( aliceUser );
         alice.setLastName( "Smith" );
-        final Calendar aliceBirth = Calendar.getInstance();
-        aliceBirth.add( Calendar.YEAR, -13 ); // alice is thirteen years old
-        alice.setDateOfBirth( aliceBirth );
+        alice.setDateOfBirth( LocalDate.now().minusYears( 13 ) ); // 13 years old
         alice.save();
 
         final Hospital hosp = new Hospital( "General Hospital", "123 Main St", "12345", "NC" );
@@ -293,10 +282,7 @@ public class HibernateDataGenerator {
         siegward.setLastName( "Catarina" );
         siegward.setGender( Gender.Male );
         siegward.setBloodType( BloodType.OPos );
-        final Calendar siegBirth = Calendar.getInstance();
-        siegBirth.add( Calendar.YEAR, -30 ); // SiegwardOf Catarina is 30 years
-                                             // old
-        siegward.setDateOfBirth( siegBirth );
+        siegward.setDateOfBirth( LocalDate.now().minusYears( 30 ) ); // 30 years old
         siegward.save();
 
         final Patient king1 = new Patient();
@@ -308,10 +294,7 @@ public class HibernateDataGenerator {
         king1.setLastName( "One" );
         king1.setGender( Gender.Male );
         king1.setBloodType( BloodType.OPos );
-        final Calendar king1Birth = Calendar.getInstance();
-        king1Birth.add( Calendar.YEAR, -30 ); // King One is 30 years
-                                              // old
-        king1.setDateOfBirth( king1Birth );
+        king1.setDateOfBirth( LocalDate.now().minusYears( 30 ) ); // 30 years old
         king1.save();
 
         final Patient king2 = new Patient();
@@ -323,10 +306,7 @@ public class HibernateDataGenerator {
         king2.setLastName( "Two" );
         king2.setGender( Gender.Male );
         king2.setBloodType( BloodType.OPos );
-        final Calendar king2Birth = Calendar.getInstance();
-        king2Birth.add( Calendar.YEAR, -30 ); // King One is 30 years
-                                              // old
-        king2.setDateOfBirth( king2Birth );
+        king2.setDateOfBirth( LocalDate.now().minusYears( 30 ) ); // 30 years old
         king2.save();
 
         final Patient king3 = new Patient();
@@ -338,10 +318,7 @@ public class HibernateDataGenerator {
         king3.setLastName( "Three" );
         king3.setGender( Gender.Male );
         king3.setBloodType( BloodType.OPos );
-        final Calendar king3Birth = Calendar.getInstance();
-        king3Birth.add( Calendar.YEAR, -30 ); // King One is 30 years
-                                              // old
-        king3.setDateOfBirth( king3Birth );
+        king3.setDateOfBirth( LocalDate.now().minusYears( 30 ) ); // 30 years old
         king3.save();
 
         final Patient king4 = new Patient();
@@ -353,10 +330,7 @@ public class HibernateDataGenerator {
         king4.setLastName( "Four" );
         king4.setGender( Gender.Male );
         king4.setBloodType( BloodType.OPos );
-        final Calendar king4Birth = Calendar.getInstance();
-        king4Birth.add( Calendar.YEAR, -30 ); // King One is 30 years
-                                              // old
-        king4.setDateOfBirth( king4Birth );
+        king4.setDateOfBirth( LocalDate.now().minusYears( 30 ) ); // 30 years old
         king4.save();
 
         // First Prescription for APIEmergencyRecordFormTest

@@ -10,6 +10,7 @@ package edu.ncsu.csc.itrust2.models.enums;
  * representing the event.
  *
  * @author Kai Presler-Marshall
+ * @author Jack MacDonald
  *
  */
 public enum TransactionType {

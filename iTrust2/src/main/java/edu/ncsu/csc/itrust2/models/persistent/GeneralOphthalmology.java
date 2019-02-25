@@ -12,12 +12,9 @@ import org.apache.commons.lang3.StringUtils;
 import edu.ncsu.csc.itrust2.forms.hcp.GeneralOphthalmologyForm;
 
 /**
- * Represents a GeneralOphthalmology appointment. Contains no fields other than
- * those in the the OphthalmologyVisit class, but this distinguishes it from the
- * OphthalmologySurgery.
+ * Represents a GeneralOphthalmology appointment
  *
  * @author Jack MacDonald
- * @author Kai Presler-Marshall
  */
 @Entity
 @Table ( name = "GeneralOphthalmology" )

@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
@@ -114,12 +114,6 @@ public class LabProcedureTest {
 
         final GeneralCheckup visit = new GeneralCheckup();
 
-        Diagnosis.getForPatient( "AliceThirteen" ).stream().forEach( e -> e.delete() );
-
-        GeneralCheckup.getForPatient( "AliceThirteen" ).stream().forEach( e -> e.delete() );
-
-        BasicHealthMetrics.getBasicHealthMetricsForPatient( "AliceThirteen" ).stream().forEach( e -> e.delete() );
-
         final BasicHealthMetrics bhm = new BasicHealthMetrics();
 
         bhm.setDiastolic( 150 );
@@ -137,7 +131,7 @@ public class LabProcedureTest {
         visit.setHospital( hosp );
         visit.setPatient( User.getByName( "AliceThirteen" ) );
         visit.setHcp( User.getByName( "AliceThirteen" ) );
-        visit.setDate( OffsetDateTime.now() );
+        visit.setDate( ZonedDateTime.now() );
 
         final List<Diagnosis> diagnoses = new Vector<Diagnosis>();
 
@@ -204,8 +198,7 @@ public class LabProcedureTest {
         patient3.save();
         assignedTech3.save();
         final GeneralCheckupForm visitForm = new GeneralCheckupForm();
-        visitForm.setDate( "2048-04-16T09:50:00.000-04:00" ); // 4/16/2048 9:50
-                                                              // AM
+        visitForm.setDate( "2048-04-16T09:50:00.000-04:00" ); // 4/16/2048 9:50 AM
         visitForm.setHcp( "hcp" );
         visitForm.setPatient( "patient" );
         visitForm.setNotes( "Test office visit" );
@@ -249,6 +242,7 @@ public class LabProcedureTest {
         assertTrue( lp.getLoinc() != null );
         assertTrue( lp.getAssignedTech() != null );
         assertTrue( lp.getPatient() != null );
+        assertTrue( lp.getVisit() != null );
         lp.save();
         lp2.save();
         lp3.save();
@@ -312,8 +306,7 @@ public class LabProcedureTest {
         patient.save();
         assignedTech.save();
         final GeneralCheckupForm visitForm = new GeneralCheckupForm();
-        visitForm.setDate( "2048-04-16T09:50:00.000-04:00" ); // 4/16/2048 9:50
-                                                              // AM
+        visitForm.setDate( "2048-04-16T09:50:00.000-04:00" ); // 4/16/2048 9:50 AM
         visitForm.setHcp( "hcp" );
         visitForm.setPatient( "patient" );
         visitForm.setNotes( "Test office visit" );

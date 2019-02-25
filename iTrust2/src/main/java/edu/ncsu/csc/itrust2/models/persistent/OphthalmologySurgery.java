@@ -9,12 +9,9 @@ import edu.ncsu.csc.itrust2.forms.hcp.OphthalmologySurgeryForm;
 import edu.ncsu.csc.itrust2.models.enums.EyeSurgeryType;
 
 /**
- * Represents an Ophthalmology Surgery. An extension of the general
- * OphthalmologyVisit class that adds a (now required) surgery type.
- * 
- * @author Jack MacDonald
- * @author Kai Presler-Marshall
+ * Represents a Ophthalmology Surgery
  *
+ * @author Jack MacDonald
  */
 @Entity
 @Table ( name = "OphthalmologySurgery" )
@@ -33,7 +30,7 @@ public class OphthalmologySurgery extends OphthalmologyVisit {
      * Creates an ophthalmology surgery from the given form.
      *
      * @param visitF
-     *            Ophthalmology visit form to create surgery out of
+     *            Visit form to create surgery out of
      * @throws ParseException
      *             problem creating the surgery
      */
@@ -43,7 +40,7 @@ public class OphthalmologySurgery extends OphthalmologyVisit {
     }
 
     /**
-     * Gets the surgery type on the visit
+     * Gets the surgery type
      *
      * @return the surgery type
      */

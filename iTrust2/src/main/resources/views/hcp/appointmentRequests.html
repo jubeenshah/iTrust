@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head th:include="layout :: head(title=~{::title},links=~{})">
-	<title>View Appointment Requests</title>
+<title>View Appointment Requests</title>
 </head>
 
 <body th:include="layout :: body" th:with="content=~{::content}">
@@ -14,52 +14,6 @@
 			/*<![CDATA[*/
 			var app = angular.module("viewAppointmentRequestHCPApp", []);
 			
-			/**
-			 * Gets the date and time from the JSON datetime and offset objects.
-			 */
-			var getDateTimeFromJson = function(input) {
-				const date = input.dateTime.date;
-				let month = date.month < 10 ? "0" + date.month : date.month;
-				let day = date.day < 10 ? "0" + date.day : date.day;
-
-				const time = input.dateTime.time;
-				let hour = time.hour < 10 ? "0" + time.hour : time.hour;
-				let minute = time.minute < 10 ? "0" + time.minute : time.minute;
-
-				var offset = input.offset.totalSeconds;
-				offset = offset / 3600; // Convert to hours
-
-				// Offset padding
-				if (offset == 0) {
-					offset = "Z";
-				} else if (offset < 0 && offset > -10) {
-					offset = `-0${Math.abs(offset)}:00`;
-				} else if (offset < 10) {
-					offset = `0${Math.abs(offset)}:00`;
-				}
-				
-				const isoString = `${date.year}-${month}-${day}T${hour}:${minute}:00.000${offset}`;
-				return new Date(isoString);
-			}
-
-			/**
-			 * Filter for converting a Calendar serialization into the proper date string.
-			 */
-			app.filter('dateFromJson', function() {
-				return function(input) {
-					return getDateTimeFromJson(input).toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
-				}
-			});
-
-			/**
-			 * Filter for converting a Calendar serialization into the proper time string.
-			 */
-			app.filter('timeFromJson', function() {
-				return function(input) {
-					return getDateTimeFromJson(input).toLocaleString('en-US', { hour: '2-digit', hour12: true, minute: '2-digit' });
-				}
-			});
-
 			/**
 			 * A filter to humanize the text to be more user friendly.
 			 */
@@ -118,7 +72,7 @@
 
 								$scope.selectedAppointment.patient = $scope.appointmentByID.patient.username;
 								$scope.selectedAppointment.hcp = $scope.hcp;
-								$scope.selectedAppointment.date = getDateTimeFromJson($scope.appointmentByID.date).toISOString();
+								$scope.selectedAppointment.date = new Date($scope.appointmentByID.date).toISOString();
 								$scope.selectedAppointment.type = $scope.appointmentByID.type;
 								$scope.selectedAppointment.comments = $scope.appointmentByID.comments;
 								$scope.selectedAppointment.id = $scope.appointmentByID.id;
@@ -146,23 +100,18 @@
 			/*]]>*/
 		</script>
 
-		<div ng-app="viewAppointmentRequestHCPApp" ng-controller="viewAppointmentRequestHCPCtrl">
+		<div ng-app="viewAppointmentRequestHCPApp"
+			ng-controller="viewAppointmentRequestHCPCtrl">
 			<table style="width: 100%">
 				<tr>
 					<td style="vertical-align: top">
 						<h3>Upcoming Medical Appointment</h3>
 						<ul style="list-style: none;">
-							<li ng-repeat="appt in incomingAppointments">
-								<label>
-									Type: {{appt.type | humanize}}
-									<br />
-									Date: {{appt.date | dateFromJson}}
-									<br />
-									Time: {{appt.date | timeFromJson}}
-									<br />
-									Patient: {{appt.patient.username}}
-								</label>
-							</li>
+							<li ng-repeat="appt in incomingAppointments"><label>
+									Type: {{appt.type | humanize}} <br /> Date: {{appt.date | date
+									: 'MM/dd/yyyy'}} <br /> Time: {{appt.date | date :
+									'shortTime'}} <br /> Patient: {{appt.patient.username}}
+							</label></li>
 						</ul>
 						<div name="errorMsg1" class="text-danger">{{errorMsg1}}</div>
 					</td>
@@ -172,37 +121,29 @@
 						<div class="col radio-box">
 							<div class="form-check">
 								<ul style="list-style: none; padding: 0;">
-									<li ng-repeat="appt in appointments">
-										<span>
-											<input
-											type="radio"
-											ng-model="selectedAppointment.id"
-											name="appointment"
-											id="appt{{appt.id}}"
-											value="{{appt.id}}"
-											required="true"
-											/>
-											<label for="appt{{appt.id}}" style="vertical-align: middle; padding-left: 10px; cursor: pointer;">
-												Type: {{appt.type | humanize}}
-												<br />
-												Date: {{appt.date | dateFromJson}}
-												<br />
-												Time: {{appt.date | timeFromJson}}
-												<br />
-												Patient: {{appt.patient.username}}
-											</label>
-										</span>
-									</li>
+									<li ng-repeat="appt in appointments"><span> <input
+											type="radio" ng-model="selectedAppointment.id"
+											name="appointment" id="appt{{appt.id}}" value="{{appt.id}}"
+											required="true" /> <label for="appt{{appt.id}}"
+											style="vertical-align: middle; padding-left: 10px; cursor: pointer;">
+												Type: {{appt.type | humanize}} <br /> Date: {{appt.date |
+												date : 'MM/dd/yyyy'}} <br /> Time: {{appt.date | date :
+												'shortTime'}} <br /> Patient: {{appt.patient.username}}
+										</label>
+									</span></li>
 								</ul>
 							</div>
 
-							<label for="changeStatus" ng-if="statuses && appointments.length">Change Status:
-								<select name="changeStatus" id="changeStatus" ng-model="selectedAppointment.status">
-									<option ng-repeat="status in statuses" value="{{status}}">{{status | humanize}}</option>
-								</select>
+							<label for="changeStatus" ng-if="statuses && appointments.length">Change
+								Status: <select name="changeStatus" id="changeStatus"
+								ng-model="selectedAppointment.status">
+									<option ng-repeat="status in statuses" value="{{status}}">{{status
+										| humanize}}</option>
+							</select>
 							</label>
 
-							<button class="btn btn-primary" ng-if="appointments.length > 0" ng-click="updateAppointment()" name="submit">Submit</button>
+							<button class="btn btn-primary" ng-if="appointments.length > 0"
+								ng-click="updateAppointment()" name="submit">Submit</button>
 
 							<div name="success" class="text-success">{{message}}</div>
 							<div name="errorMsg" class="text-danger">{{errorMsg}}</div>

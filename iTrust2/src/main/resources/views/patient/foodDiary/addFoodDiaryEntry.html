@@ -1,9 +1,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:include="layout :: head(title=~{::title},links=~{})">
-	<title>Add Food Diary Entry</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<head th:include="layout :: head(title=~{::title},links=~{::script})">
+<title>Add Food Diary Entry</title>
+<script th:src="@{/resources/js/dateTimeService.js}"
+	src="../resources/js/dateTimeService.js"></script>
 </head>
 
 <body th:include="layout :: body" th:with="content=~{::content}">
@@ -12,12 +12,12 @@
 		<script th:inline="javascript">
 			/* Otherwise Thymeleaf tries to parse Javascript as XML and breaks itself sometimes.  Sigh */
 			/*<![CDATA[*/
-			var app = angular.module("addFoodDiaryEntryApp", []);
-			app.controller('addFoodDiaryEntryCtrl', function ($scope, $http) {
+			var app = angular.module("addFoodDiaryEntryApp", ['dateTimeServices']);
+			app.controller('addFoodDiaryEntryCtrl', function ($scope, $http, dateTimeService) {
 				const now = new Date();
 				$scope.inputDate = now;
 				$scope.entry = {
-					date: now.getTime(),
+					date: dateTimeService.toDateString(now),
 					mealType: '',
 					food: '',
 					servings: 1
@@ -37,10 +37,10 @@
 					// Validate entry date
 					var date = new Date($scope.inputDate);
 					var now = new Date();
-					if (!(date instanceof Date) || isNaN(date) || now - date < 0) {
+					if (!dateTimeService.isValidDate(date) || now - date < 0) {
 						$scope.errorMsg += "Please input a valid date.\n";
 					} else {
-						$scope.entry.date = date.getTime();
+						$scope.entry.date = dateTimeService.toDateString(date);
 					}
 					
 					if (!$scope.entry.mealType) {
@@ -81,6 +81,10 @@
 						$scope.failAddEntry();
 						return;
 					}
+					
+					// Prepare entry for submission
+					var submitEntry = angular.copy($scope.entry);
+					submitEntry.date = dateTimeService.toDateString(date);
 
 					// POST the entry to the REST API endpoint, and handle
 					// success/error
@@ -105,7 +109,8 @@
 			/*]]>*/
 		</script>
 
-		<div class="container" ng-app="addFoodDiaryEntryApp" ng-controller="addFoodDiaryEntryCtrl">
+		<div class="container" ng-app="addFoodDiaryEntryApp"
+			ng-controller="addFoodDiaryEntryCtrl">
 			<div class="row">
 				<div class="col">
 					<h3>Add Food Diary Entry</h3>
@@ -113,37 +118,41 @@
 
 				<div class="col-md-5">
 					<div class="form-group">
-						<label for="date">Date</label>
-						<input class="form-control" id="date" type="date" 
-							ng-model="inputDate" name="date" required="true" />
+						<label for="date">Date</label> <input class="form-control"
+							id="date" type="date" ng-model="inputDate" name="date"
+							required="true" />
 					</div>
 
 					<div class="form-group">
-						<label for="mealType">Type of Meal</label>
-						<select class="form-control" ng-model="entry.mealType" id="mealType" name="mealType">
+						<label for="mealType">Type of Meal</label> <select
+							class="form-control" ng-model="entry.mealType" id="mealType"
+							name="mealType">
 							<option ng-repeat="mealType in mealTypes">{{mealType}}</option>
 						</select>
 					</div>
 
 					<div class="form-group">
-						<label for="food">Name of Food</label>
-						<input class="form-control" id="food" type="text" ng-model="entry.food" name="food" />
+						<label for="food">Name of Food</label> <input class="form-control"
+							id="food" type="text" ng-model="entry.food" name="food" />
 					</div>
 
 					<div class="form-group">
-						<label for="servings">Number of Servings</label>
-						<input class="form-control" id="servings" type="number" ng-model="entry.servings" name="servings" />
+						<label for="servings">Number of Servings</label> <input
+							class="form-control" id="servings" type="number"
+							ng-model="entry.servings" name="servings" />
 					</div>
 
 					<div class="form-group">
-						<label for="calories">Calories per Serving</label>
-						<input class="form-control" id="calories" type="number" ng-model="entry.calories" name="calories" />
+						<label for="calories">Calories per Serving</label> <input
+							class="form-control" id="calories" type="number"
+							ng-model="entry.calories" name="calories" />
 					</div>
 
 					<div class="form-group">
 						<label for="fat">Fat per Serving</label>
 						<div class="input-group">
-							<input class="form-control" id="fat" type="number" ng-model="entry.fat" name="fat" />
+							<input class="form-control" id="fat" type="number"
+								ng-model="entry.fat" name="fat" />
 							<div class="input-group-addon">g</div>
 						</div>
 					</div>
@@ -151,7 +160,8 @@
 					<div class="form-group">
 						<label for="sodium">Sodium per Serving</label>
 						<div class="input-group">
-							<input class="form-control" id="sodium" type="number" ng-model="entry.sodium" name="sodium" />
+							<input class="form-control" id="sodium" type="number"
+								ng-model="entry.sodium" name="sodium" />
 							<div class="input-group-addon">mg</div>
 						</div>
 					</div>
@@ -159,7 +169,8 @@
 					<div class="form-group">
 						<label for="carbs">Carbs per Serving</label>
 						<div class="input-group">
-							<input class="form-control" id="carbs" type="number" ng-model="entry.carbs" name="carbs" />
+							<input class="form-control" id="carbs" type="number"
+								ng-model="entry.carbs" name="carbs" />
 							<div class="input-group-addon">g</div>
 						</div>
 					</div>
@@ -167,7 +178,8 @@
 					<div class="form-group">
 						<label for="sugars">Sugars per Serving</label>
 						<div class="input-group">
-							<input class="form-control" id="sugars" type="number" ng-model="entry.sugars" name="sugars" />
+							<input class="form-control" id="sugars" type="number"
+								ng-model="entry.sugars" name="sugars" />
 							<div class="input-group-addon">g</div>
 						</div>
 					</div>
@@ -175,7 +187,8 @@
 					<div class="form-group">
 						<label for="fiber">Fiber per Serving</label>
 						<div class="input-group">
-							<input class="form-control" id="fiber" type="number" ng-model="entry.fiber" name="fiber" />
+							<input class="form-control" id="fiber" type="number"
+								ng-model="entry.fiber" name="fiber" />
 							<div class="input-group-addon">g</div>
 						</div>
 					</div>
@@ -183,13 +196,15 @@
 					<div class="form-group">
 						<label for="protein">Protein per Serving</label>
 						<div class="input-group">
-							<input class="form-control" id="protein" type="number" ng-model="entry.protein" name="protein" />
+							<input class="form-control" id="protein" type="number"
+								ng-model="entry.protein" name="protein" />
 							<div class="input-group-addon">g</div>
 						</div>
 					</div>
 
 					<div class="form-group">
-						<button type="submit" class="btn btn-primary" ng-click=submit() name="submit" id="submit">Add Entry</button>
+						<button type="submit" class="btn btn-primary" ng-click=submit()
+							name="submit" id="submit">Add Entry</button>
 					</div>
 
 					<div class="form-group">

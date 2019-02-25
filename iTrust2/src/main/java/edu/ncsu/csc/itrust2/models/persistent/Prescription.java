@@ -4,6 +4,8 @@ package edu.ncsu.csc.itrust2.models.persistent;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.Basic;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,9 +16,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import com.google.gson.annotations.JsonAdapter;
+
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.criterion.Criterion;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters.LocalDateConverter;
 
+import edu.ncsu.csc.itrust2.adapters.LocalDateAdapter;
 import edu.ncsu.csc.itrust2.forms.hcp.PrescriptionForm;
 import edu.ncsu.csc.itrust2.models.enums.Role;
 
@@ -26,6 +32,7 @@ import edu.ncsu.csc.itrust2.models.enums.Role;
  *
  * @author Connor
  * @author Kai Presler-Marshall
+ * @author Matt Dzwonczyk
  */
 @Entity
 @Table ( name = "Prescriptions" )
@@ -46,10 +53,18 @@ public class Prescription extends DomainObject<Prescription> {
 
     @NotNull
     @JoinColumn ( name = "start_id" )
+    @Basic
+    // Allows the field to show up nicely in the database
+    @Convert(converter = LocalDateConverter.class)
+    @JsonAdapter( LocalDateAdapter.class )
     private LocalDate startDate;
 
     @NotNull
     @JoinColumn ( name = "end_id" )
+    @Basic
+    // Allows the field to show up nicely in the database
+    @Convert(converter = LocalDateConverter.class)
+    @JsonAdapter( LocalDateAdapter.class )
     private LocalDate endDate;
 
     @Min ( 0 )
@@ -82,7 +97,7 @@ public class Prescription extends DomainObject<Prescription> {
         if ( form.getId() != null ) {
             setId( form.getId() );
         }
-        
+
         setStartDate( LocalDate.parse( form.getStartDate() ) );
         setEndDate( LocalDate.parse( form.getEndDate() ) );
     }

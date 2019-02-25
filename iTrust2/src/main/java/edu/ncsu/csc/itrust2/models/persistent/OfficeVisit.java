@@ -1,12 +1,14 @@
 package edu.ncsu.csc.itrust2.models.persistent;
 
 import java.text.ParseException;
-import java.time.OffsetDateTime;
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Vector;
 import java.util.stream.Collectors;
 
+import javax.persistence.Basic;
+import javax.persistence.Convert;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -18,8 +20,12 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import com.google.gson.annotations.JsonAdapter;
+
 import org.hibernate.criterion.Criterion;
 
+import edu.ncsu.csc.itrust2.adapters.ZonedDateTimeAdapter;
+import edu.ncsu.csc.itrust2.adapters.ZonedDateTimeAttributeConverter;
 import edu.ncsu.csc.itrust2.forms.hcp.OfficeVisitForm;
 import edu.ncsu.csc.itrust2.models.enums.AppointmentType;
 import edu.ncsu.csc.itrust2.models.enums.Role;
@@ -158,7 +164,7 @@ public abstract class OfficeVisit extends DomainObject<OfficeVisit> {
             setId( Long.parseLong( ovf.getId() ) );
         }
 
-        OffsetDateTime visitDate = OffsetDateTime.parse( ovf.getDate() );
+        ZonedDateTime visitDate = ZonedDateTime.parse( ovf.getDate() );
         setDate( visitDate );
         
         AppointmentType at = null;
@@ -199,24 +205,22 @@ public abstract class OfficeVisit extends DomainObject<OfficeVisit> {
         if ( p == null || p.getDateOfBirth() == null ) {
             return; // we're done, patient can't be tested against
         }
-        final Calendar dob = p.getDateOfBirth();
-        int age = date.getYear() - dob.get( Calendar.YEAR );
+        final LocalDate dob = p.getDateOfBirth();
+        int age = date.getYear() - dob.getYear();
         // Remove the -1 when changing the dob to OffsetDateTime
-        if ( date.getMonthValue() - 1 < dob.get( Calendar.MONTH ) ) {
+        if ( date.getMonthValue() < dob.getMonthValue() ) {
             age -= 1;
-        }
-        else if ( date.getMonthValue() - 1 == dob.get( Calendar.MONTH ) ) {
-            if ( date.getDayOfMonth() < dob.get( Calendar.DATE ) ) {
+        } else if ( date.getMonthValue() == dob.getMonthValue() ) {
+            if ( date.getDayOfMonth() < dob.getDayOfMonth() ) {
                 age -= 1;
             }
         }
+
         if ( age < 3 ) {
             validateUnder3();
-        }
-        else if ( age < 12 ) {
+        } else if ( age < 12 ) {
             validateUnder12();
-        }
-        else {
+        } else {
             validate12AndOver();
         }
     }
@@ -307,7 +311,7 @@ public abstract class OfficeVisit extends DomainObject<OfficeVisit> {
      *
      * @return the date of this office visit
      */
-    public OffsetDateTime getDate () {
+    public ZonedDateTime getDate () {
         return date;
     }
 
@@ -317,7 +321,7 @@ public abstract class OfficeVisit extends DomainObject<OfficeVisit> {
      * @param date
      *            the date to set this office visit to
      */
-    public void setDate ( final OffsetDateTime date ) {
+    public void setDate ( final ZonedDateTime date ) {
         this.date = date;
     }
 
@@ -463,7 +467,11 @@ public abstract class OfficeVisit extends DomainObject<OfficeVisit> {
      * The date of this office visit
      */
     @NotNull
-    private OffsetDateTime           date;
+    @Basic
+    // Allows the field to show up nicely in the database
+    @Convert( converter = ZonedDateTimeAttributeConverter.class )
+    @JsonAdapter( ZonedDateTimeAdapter.class )
+    private ZonedDateTime      date;
 
     /**
      * The id of this office visit

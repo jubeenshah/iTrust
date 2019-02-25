@@ -5,6 +5,7 @@ package edu.ncsu.csc.itrust2.models.enums;
  * Different users have different functionality.
  *
  * @author Kai Presler-Marshall
+ * @author Jack MacDonald
  *
  */
 public enum Role {

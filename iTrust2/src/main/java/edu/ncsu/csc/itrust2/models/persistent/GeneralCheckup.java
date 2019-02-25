@@ -17,6 +17,11 @@ import edu.ncsu.csc.itrust2.forms.hcp.PrescriptionForm;
 import edu.ncsu.csc.itrust2.models.enums.TransactionType;
 import edu.ncsu.csc.itrust2.utils.LoggerUtil;
 
+/**
+ * Model class for a general checkup.
+ * 
+ * @author Jack MacDonald
+ */
 @Entity
 @Table ( name = "GeneralCheckups" )
 public class GeneralCheckup extends OfficeVisit {

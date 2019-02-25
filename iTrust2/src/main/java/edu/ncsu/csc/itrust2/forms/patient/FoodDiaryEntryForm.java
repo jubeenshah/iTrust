@@ -15,7 +15,7 @@ public class FoodDiaryEntryForm {
     /**
      * The date as milliseconds since epoch for the entry
      */
-    private long date;
+    private String date;
     
     /**
      * The type of meal
@@ -78,17 +78,17 @@ public class FoodDiaryEntryForm {
 
     /**
      * Gets the date
-     * @return the date as milliseconds since epoch
+     * @return the diary date
      */
-    public long getDate() {
+    public String getDate() {
         return date;
     }
 
     /**
      * Sets the date
-     * @param date the date as milliseconds since epoch to set
+     * @param date the diary date to set
      */
-    public void setDate(final long date) {
+    public void setDate(final String date) {
         this.date = date;
     }
 

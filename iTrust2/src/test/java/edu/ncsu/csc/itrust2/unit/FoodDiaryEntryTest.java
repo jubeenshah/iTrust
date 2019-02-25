@@ -1,9 +1,10 @@
 package edu.ncsu.csc.itrust2.unit;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.fail;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,8 +12,8 @@ import org.junit.Test;
 import edu.ncsu.csc.itrust2.forms.patient.FoodDiaryEntryForm;
 import edu.ncsu.csc.itrust2.models.enums.MealType;
 import edu.ncsu.csc.itrust2.models.enums.Role;
-import edu.ncsu.csc.itrust2.models.persistent.FoodDiaryEntry;
 import edu.ncsu.csc.itrust2.models.persistent.DomainObject;
+import edu.ncsu.csc.itrust2.models.persistent.FoodDiaryEntry;
 import edu.ncsu.csc.itrust2.models.persistent.User;
 
 /**
@@ -39,10 +40,9 @@ public class FoodDiaryEntryTest {
     @Test
     public void testDiaryEntry() {
         FoodDiaryEntry entry = new FoodDiaryEntry();
+        LocalDate entryDate = LocalDate.parse( "2018-09-03" );
         
-        Calendar cal = new GregorianCalendar(2018, 9, 3);
-        
-        entry.setDate(cal.getTimeInMillis());
+        entry.setDate(entryDate);
         entry.setMealType(MealType.Lunch);
         entry.setFood("Peanut Butter and Jelly Sandwich");
         entry.setServings(1);
@@ -71,7 +71,7 @@ public class FoodDiaryEntryTest {
         assertEquals(entry.getPatient(), copy.getPatient());
 
         FoodDiaryEntryForm def = new FoodDiaryEntryForm();
-        def.setDate(cal.getTimeInMillis());
+        def.setDate(entryDate.toString());
         def.setMealType(MealType.Lunch);
         def.setFood("Peanut Butter and Jelly Sandwich");
         def.setServings(1);
@@ -108,9 +108,7 @@ public class FoodDiaryEntryTest {
         FoodDiaryEntry entry = new FoodDiaryEntry();
 
         try {
-            Calendar cal = new GregorianCalendar(3000, 9, 3);
-            
-            entry.setDate(cal.getTimeInMillis());
+            entry.setDate(LocalDate.parse( "3000-09-03" ));
             fail();
         } catch (IllegalArgumentException e) {
             assertEquals("Date must be before current date", e.getMessage());
@@ -171,10 +169,9 @@ public class FoodDiaryEntryTest {
     @Test
     public void testGetByPatient() {
         FoodDiaryEntry entry = new FoodDiaryEntry();
-
-        Calendar cal = new GregorianCalendar(2018, 9, 3);
+        LocalDate entryDate = LocalDate.parse( "2018-09-03" );
         
-        entry.setDate(cal.getTimeInMillis());
+        entry.setDate(entryDate);
         entry.setMealType(MealType.Lunch);
         entry.setFood("Peanut Butter and Jelly Sandwich");
         entry.setServings(1);
@@ -192,7 +189,7 @@ public class FoodDiaryEntryTest {
 
         FoodDiaryEntry entry2 = new FoodDiaryEntry();
 
-        entry2.setDate(cal.getTimeInMillis());
+        entry2.setDate(entryDate);
         entry2.setMealType(MealType.Lunch);
         entry2.setFood("Peanut Butter");
         entry2.setServings(1);

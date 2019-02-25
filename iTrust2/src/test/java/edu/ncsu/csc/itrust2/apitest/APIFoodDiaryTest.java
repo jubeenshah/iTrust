@@ -9,8 +9,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.junit.Before;
@@ -47,7 +45,7 @@ import edu.ncsu.csc.itrust2.utils.LoggerUtil;
  * Test for the API functionality for interacting with diary entries
  *
  * @author Brendan Boss (blboss)
- *
+ * @author Matt Dzwonczyk (mgdzwonc)
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { RootConfiguration.class, WebMvcConfiguration.class })
@@ -87,7 +85,7 @@ public class APIFoodDiaryTest {
         patient.setAddress2( "Some Location" );
         patient.setBloodType( BloodType.APos.toString() );
         patient.setCity( "Viipuri" );
-        patient.setDateOfBirth( "6/15/1977" );
+        patient.setDateOfBirth( "1977-06-15" );
         patient.setEmail( "patient@itrust.fi" );
         patient.setEthnicity( Ethnicity.Caucasian.toString() );
         patient.setFirstName( "Patient" );
@@ -101,9 +99,7 @@ public class APIFoodDiaryTest {
                 .content( TestUtils.asJsonString( patient ) ) );
         
         final FoodDiaryEntryForm def = new FoodDiaryEntryForm();
-        
-        Calendar cal = new GregorianCalendar(2018, 9, 3);
-        def.setDate(cal.getTimeInMillis());
+        def.setDate( "2018-09-03" );
         def.setMealType(MealType.Lunch);
         def.setFood("Peanut Butter and Jelly Sandwich");
         def.setServings(-1);
@@ -135,7 +131,7 @@ public class APIFoodDiaryTest {
         patient.setAddress2( "Some Location" );
         patient.setBloodType( BloodType.APos.toString() );
         patient.setCity( "Viipuri" );
-        patient.setDateOfBirth( "6/15/1977" );
+        patient.setDateOfBirth( "1977-06-15" );
         patient.setEmail( "patient@itrust.fi" );
         patient.setEthnicity( Ethnicity.Caucasian.toString() );
         patient.setFirstName( "Patient" );
@@ -149,9 +145,7 @@ public class APIFoodDiaryTest {
                 .content( TestUtils.asJsonString( patient ) ) );
         
         final FoodDiaryEntryForm def = new FoodDiaryEntryForm();
-        
-        Calendar cal = new GregorianCalendar(2018, 9, 3);
-        def.setDate(cal.getTimeInMillis());
+        def.setDate( "2018-09-03" );
         def.setMealType(MealType.Lunch);
         def.setFood("Peanut Butter and Jelly Sandwich");
         def.setServings(1);
@@ -200,7 +194,7 @@ public class APIFoodDiaryTest {
         patient.setAddress2( "Some Location" );
         patient.setBloodType( BloodType.APos.toString() );
         patient.setCity( "Viipuri" );
-        patient.setDateOfBirth( "6/15/1977" );
+        patient.setDateOfBirth( "1977-06-15" );
         patient.setEmail( "patient@itrust.fi" );
         patient.setEthnicity( Ethnicity.Caucasian.toString() );
         patient.setFirstName( "Patient" );

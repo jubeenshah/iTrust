@@ -1,10 +1,12 @@
 package edu.ncsu.csc.itrust2.models.persistent;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Vector;
 
+import javax.persistence.Basic;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,12 +14,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+
+import com.google.gson.annotations.JsonAdapter;
 
 import org.hibernate.criterion.Criterion;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters.LocalDateConverter;
 
+import edu.ncsu.csc.itrust2.adapters.LocalDateAdapter;
 import edu.ncsu.csc.itrust2.forms.patient.FoodDiaryEntryForm;
 import edu.ncsu.csc.itrust2.models.enums.MealType;
 
@@ -80,7 +85,7 @@ public class FoodDiaryEntry extends DomainObject<FoodDiaryEntry> implements Seri
      * @param def DiaryEntry to create
      */
     public FoodDiaryEntry(final FoodDiaryEntryForm def) {
-        setDate(def.getDate());
+        setDate(LocalDate.parse(def.getDate()));
         setMealType(def.getMealType());
         setFood(def.getFood());
         setServings(def.getServings());
@@ -96,8 +101,11 @@ public class FoodDiaryEntry extends DomainObject<FoodDiaryEntry> implements Seri
     /**
      * The date as milliseconds since epoch of this DiaryEntry
      */
-    @Min(0)
-    private Long date;
+    @Basic
+    // Allows the field to show up nicely in the database
+    @Convert(converter = LocalDateConverter.class)
+    @JsonAdapter( LocalDateAdapter.class )
+    private LocalDate date;
 
     /**
      * The type of the meal for this DiaryEntry
@@ -178,7 +186,7 @@ public class FoodDiaryEntry extends DomainObject<FoodDiaryEntry> implements Seri
      * 
      * @return the date as milliseconds since epoch
      */
-    public long getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
@@ -186,10 +194,10 @@ public class FoodDiaryEntry extends DomainObject<FoodDiaryEntry> implements Seri
      * Sets the date for this DiaryEntry
      * 
      * @param date
-     *            the date as milliseconds since epoch to set
+     *            the diary date
      */
-    public void setDate(final long date) {
-        if (date > Calendar.getInstance().getTimeInMillis()) {
+    public void setDate(final LocalDate date) {
+        if (date.isAfter(LocalDate.now())) {
             throw new IllegalArgumentException("Date must be before current date");
         }
         this.date = date;

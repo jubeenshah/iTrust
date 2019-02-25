@@ -36,7 +36,7 @@ public class APIOfficeVisitController extends APIController {
      * @return list of office visits
      */
     @GetMapping ( BASE_PATH + "/officevisits" )
-    @PreAuthorize ( "hasAnyRole('ROLE_HCP', 'ROLE_OD', 'ROLE_OPH')" )
+    @PreAuthorize ( "hasRole('ROLE_HCP') or hasRole('ROLE_OD') or hasRole('ROLE_OPH')" )
     public List<OfficeVisit> getOfficeVisits () {
         // append all other office visits here.
         return OfficeVisit.getOfficeVisits();

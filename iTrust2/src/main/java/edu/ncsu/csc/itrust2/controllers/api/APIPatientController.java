@@ -149,14 +149,18 @@ public class APIPatientController extends APIController {
                                   // demographics, false if hcp edits them
         final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         try {
-            if ( !auth.getAuthorities().contains( new SimpleGrantedAuthority( "ROLE_HCP" ) )
+            if ( ( !auth.getAuthorities().contains( new SimpleGrantedAuthority( "ROLE_HCP" ) )
+                    && !auth.getAuthorities().contains( new SimpleGrantedAuthority( "ROLE_OD" ) )
+                    && !auth.getAuthorities().contains( new SimpleGrantedAuthority( "ROLE_OPH" ) ) )
                     && ( !auth.getAuthorities().contains( new SimpleGrantedAuthority( "ROLE_PATIENT" ) )
                             || !auth.getName().equals( id ) ) ) {
                 return new ResponseEntity( errorResponse( "You do not have permission to edit this record" ),
                         HttpStatus.UNAUTHORIZED );
             }
 
-            userEdit = auth.getAuthorities().contains( new SimpleGrantedAuthority( "ROLE_HCP" ) ) ? true : false;
+            userEdit = auth.getAuthorities().contains( new SimpleGrantedAuthority( "ROLE_HCP" ) )
+                    || auth.getAuthorities().contains( new SimpleGrantedAuthority( "ROLE_OD" ) )
+                    || auth.getAuthorities().contains( new SimpleGrantedAuthority( "ROLE_OPH" ) );
         }
         catch ( final Exception e ) {
             return new ResponseEntity( HttpStatus.UNAUTHORIZED );

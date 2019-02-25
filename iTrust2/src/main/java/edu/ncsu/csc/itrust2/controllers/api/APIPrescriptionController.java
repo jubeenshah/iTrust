@@ -24,6 +24,7 @@ import edu.ncsu.csc.itrust2.utils.LoggerUtil;
  * to add, edit, fetch, and delete prescriptions.
  *
  * @author Connor
+ * @author Kai Presler-Marshall
  */
 @RestController
 @SuppressWarnings ( { "rawtypes", "unchecked" } )

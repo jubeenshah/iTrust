@@ -1,17 +1,24 @@
 package edu.ncsu.csc.itrust2.forms.hcp;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
 import edu.ncsu.csc.itrust2.models.persistent.OphthalmologyVisit;
 
 /**
  * The abstraction of the form a doctor fills out for any ophthalmology appointment
+ * 
  * @author Jack MacDonald
- *
  */
 public abstract class OphthalmologyVisitForm extends OfficeVisitForm {
 
-    private String  visualAcuityOD;
+    @Min(20)
+    @Max(200)
+    private Integer  visualAcuityOD;
 
-    private String  visualAcuityOS;
+    @Min(20)
+    @Max(200)
+    private Integer  visualAcuityOS;
 
     private Double  sphereOD;
 
@@ -52,7 +59,7 @@ public abstract class OphthalmologyVisitForm extends OfficeVisitForm {
      *
      * @return visual acuity for the left eye
      */
-    public String getVisualAcuityOD () {
+    public Integer getVisualAcuityOD () {
         return visualAcuityOD;
     }
 
@@ -62,7 +69,7 @@ public abstract class OphthalmologyVisitForm extends OfficeVisitForm {
      * @param visualAcuityOD
      *            visual acuity for the left eye
      */
-    public void setVisualAcuityOD ( String visualAcuityOD ) {
+    public void setVisualAcuityOD ( Integer visualAcuityOD ) {
         this.visualAcuityOD = visualAcuityOD;
     }
 
@@ -71,7 +78,7 @@ public abstract class OphthalmologyVisitForm extends OfficeVisitForm {
      *
      * @return visual acuity for the right eye
      */
-    public String getVisualAcuityOS () {
+    public Integer getVisualAcuityOS () {
         return visualAcuityOS;
     }
 
@@ -81,7 +88,7 @@ public abstract class OphthalmologyVisitForm extends OfficeVisitForm {
      * @param visualAcuityOS
      *            visual acuity for the right eye
      */
-    public void setVisualAcuityOS ( String visualAcuityOS ) {
+    public void setVisualAcuityOS ( Integer visualAcuityOS ) {
         this.visualAcuityOS = visualAcuityOS;
     }
 

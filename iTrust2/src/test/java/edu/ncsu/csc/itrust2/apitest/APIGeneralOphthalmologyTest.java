@@ -53,6 +53,7 @@ import edu.ncsu.csc.itrust2.mvc.config.WebMvcConfiguration;
 /**
  * Test for the API functionality for interacting with office visits
  *
+ * @author Jack MacDonald
  * @author Kai Presler-Marshall
  *
  */
@@ -124,7 +125,9 @@ public class APIGeneralOphthalmologyTest {
         mvc.perform( delete( "/api/v1/appointmentrequests" ) );
 
         final AppointmentRequestForm appointmentForm = new AppointmentRequestForm();
-        appointmentForm.setDate( "2030-11-19T04:50:00.000-05:00" ); // 2030-11-19 4:50 AM EST
+        appointmentForm.setDate( "2030-11-19T04:50:00.000-05:00" ); // 2030-11-19
+                                                                    // 4:50 AM
+                                                                    // EST
         appointmentForm.setType( AppointmentType.GENERAL_OPHTHALMOLOGY.toString() );
         appointmentForm.setStatus( Status.APPROVED.toString() );
         appointmentForm.setHcp( "hcp" );
@@ -185,9 +188,9 @@ public class APIGeneralOphthalmologyTest {
         visit.setNotes( "Test office visit" );
         visit.setType( AppointmentType.GENERAL_OPHTHALMOLOGY.toString() );
         visit.setHospital( "iTrust Test Hospital 2" );
-        List<String> diagnosis = new ArrayList<String>();
-        diagnosis.add("Glaucoma");
-        diagnosis.add("Cataracts");
+        final List<String> diagnosis = new ArrayList<String>();
+        diagnosis.add( "Glaucoma" );
+        diagnosis.add( "Cataracts" );
         visit.setDiagnosis( diagnosis );
 
         /* Create the Office Visit */

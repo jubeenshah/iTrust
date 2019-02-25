@@ -30,16 +30,16 @@ public class Diagnosis extends DomainObject<Diagnosis> {
     @JoinColumn ( name = "visit_id", nullable = false )
     private GeneralCheckup visit;
 
-    private String         note;
+    private String      note;
 
     @Id
     @GeneratedValue ( strategy = GenerationType.AUTO )
-    private Long           id;
+    private Long        id;
 
     @NotNull
     @ManyToOne
     @JoinColumn ( name = "code_id" )
-    private ICDCode        code;
+    private ICDCode     code;
 
     @Override
     public Long getId () {
@@ -160,20 +160,8 @@ public class Diagnosis extends DomainObject<Diagnosis> {
      * @return The list of diagnoses
      */
     public static List<Diagnosis> getForPatient ( final User user ) {
-        return getForPatient( user.getId() );
-
-    }
-
-    /**
-     * Returns a list of diagnoses for the specified Patient
-     *
-     * @param user
-     *            The patient to get diagnoses for
-     * @return The list of diagnoses
-     */
-    public static List<Diagnosis> getForPatient ( final String user ) {
         final List<Diagnosis> diagnoses = new Vector<Diagnosis>();
-        OfficeVisit.getForPatient( user ).stream().map( OfficeVisit::getId )
+        OfficeVisit.getForPatient( user.getId() ).stream().map( OfficeVisit::getId )
                 .forEach( e -> diagnoses.addAll( getByVisit( e ) ) );
         return diagnoses;
 

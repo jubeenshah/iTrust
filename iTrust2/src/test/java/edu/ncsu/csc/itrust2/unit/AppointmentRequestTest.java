@@ -2,7 +2,7 @@ package edu.ncsu.csc.itrust2.unit;
 
 import static org.junit.Assert.assertEquals;
 
-import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 
 import org.junit.Test;
 
@@ -27,7 +27,7 @@ public class AppointmentRequestTest {
         final AppointmentRequest request = new AppointmentRequest();
 
         request.setComments( "Please I need help here!" );
-        request.setDate( OffsetDateTime.now() );
+        request.setDate( ZonedDateTime.now() );
         request.setHcp( User.getByName( "hcp" ) );
         request.setPatient( User.getByName( "patient" ) );
         request.setStatus( Status.PENDING );
@@ -50,7 +50,7 @@ public class AppointmentRequestTest {
         final AppointmentRequest request = new AppointmentRequest();
 
         request.setComments( "Somethings stuck in my eye!" );
-        request.setDate( OffsetDateTime.now() );
+        request.setDate( ZonedDateTime.now() );
         request.setHcp( User.getByName( "bobbyod" ) );
         request.setPatient( User.getByName( "patient" ) );
         request.setStatus( Status.PENDING );
@@ -73,7 +73,7 @@ public class AppointmentRequestTest {
         final AppointmentRequest request = new AppointmentRequest();
 
         request.setComments( "Gimme some of that laser surgery!" );
-        request.setDate( OffsetDateTime.now() );
+        request.setDate( ZonedDateTime.now() );
         request.setHcp( User.getByName( "robortoph" ) );
         request.setPatient( User.getByName( "patient" ) );
         request.setStatus( Status.PENDING );
