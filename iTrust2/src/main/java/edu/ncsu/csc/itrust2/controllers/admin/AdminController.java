@@ -4,7 +4,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import redis.clients.jedis.Jedis;
 /**
  * Controller to manage basic abilities for Admin roles
  *
@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class AdminController {
-
+    Jedis jedis = new Jedis();
+    String response = jedis.get("value");
     /**
      * Returns the admin for the given model
      *
@@ -38,7 +39,11 @@ public class AdminController {
     @RequestMapping ( value = "admin/users" )
     @PreAuthorize ( "hasRole('ROLE_ADMIN')" )
     public String manageUser ( final Model model ) {
-        return "/admin/users";
+        if(response == "false"){
+            return "Feature is off";
+        }
+        else
+            return "/admin/users";
     }
 
     /**
