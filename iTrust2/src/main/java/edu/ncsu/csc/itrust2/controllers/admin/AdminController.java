@@ -4,7 +4,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import redis.clients.jedis.Jedis;
+import redis.clients.jedis.*;
 /**
  * Controller to manage basic abilities for Admin roles
  *
@@ -14,7 +14,6 @@ import redis.clients.jedis.Jedis;
 
 @Controller
 public class AdminController {
-    Jedis jedis = new Jedis();
     /**
      * Returns the admin for the given model
      *
@@ -38,14 +37,14 @@ public class AdminController {
     @RequestMapping ( value = "admin/users" )
     @PreAuthorize ( "hasRole('ROLE_ADMIN')" )
     public String manageUser ( final Model model ) {
-            String response = jedis.get("value");
-            if(response == "false"){
-                return "/admin/feature.html";
-            }
-            else{
-                return "/admin/users";
+        Jedis jedis = new Jedis();
+        String response = jedis.get("value");
+        if(response == "false")
+            return "/admin/features";
+        else
+            return "/admin/users";
     }
-    }
+
     /**
      * Retrieves the form for the Drugs action
      *
@@ -95,4 +94,6 @@ public class AdminController {
     public String addCode ( final Model model ) {
         return "/admin/manageICDCodes";
     }
+
+
 }
