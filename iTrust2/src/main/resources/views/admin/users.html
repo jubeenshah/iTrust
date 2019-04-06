@@ -30,6 +30,17 @@
 			
 		    $scope.users = [];
 	        $scope.loadUsers = function () {
+						$http.get("127.0.0.1:6379").then{
+							function (redis){
+								if(redis.get("value") == "false")
+								{
+									$scope.message = "Could not display users, feature closed";
+								}
+								else{
+									$scope.message = "Can display users, feature closed";
+								}
+							}
+						}
 	          $http.get("/iTrust2/api/v1/users").then(
 	            function (response) {
 	              $scope.users = response.data;

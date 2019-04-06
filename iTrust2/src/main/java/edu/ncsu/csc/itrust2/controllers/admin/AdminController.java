@@ -48,7 +48,6 @@ public class AdminController {
             }
         }
         catch(Exception e){
-
             return "/admin/users";
         }
     }
