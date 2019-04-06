@@ -38,20 +38,14 @@ public class AdminController {
     @RequestMapping ( value = "admin/users" )
     @PreAuthorize ( "hasRole('ROLE_ADMIN')" )
     public String manageUser ( final Model model ) {
-        try{
             String response = jedis.get("value");
             if(response == "false"){
-                return "This feature is not available";
+                return "/admin/feature.html";
             }
             else{
                 return "/admin/users";
-            }
-        }
-        catch(Exception e){
-            return "/admin/users";
-        }
     }
-
+    }
     /**
      * Retrieves the form for the Drugs action
      *
