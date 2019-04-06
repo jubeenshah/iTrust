@@ -37,11 +37,11 @@ public class AdminController {
     @RequestMapping ( value = "admin/users" )
     @PreAuthorize ( "hasRole('ROLE_ADMIN')" )
     public String manageUser ( final Model model ) {
-        Jedis jedis = new Jedis();
-        String response = jedis.get("value");
-        System.out.println(response);
-        if(response == "false")
-            return "/admin/features";
+        Jedis jedis = new Jedis("localhost");
+        String value = jedis.get("value");
+        //System.out.println(value);
+        if(value == "false")
+            return "/admin/feature";
         else
             return "/admin/users";
     }
