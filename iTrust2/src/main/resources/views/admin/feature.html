@@ -1,8 +1,10 @@
-<html>
-<head>
-<title>Feature unavailable</title>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: head(title=~{::title},links=~{})">
+<title>Admin Home</title>
 </head>
-<body>
-	<h1>Sorry! This feature is not available right now.</h1>
+<body th:include="layout :: body" th:with="content=~{::content}">
+        <div th:fragment="content">
+                <h1>Feature is Disabled for now. Thank you</h1>
+        </div>
 </body>
 </html>
