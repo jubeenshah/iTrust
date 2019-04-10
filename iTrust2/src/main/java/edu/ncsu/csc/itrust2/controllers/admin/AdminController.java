@@ -41,7 +41,7 @@ public class AdminController {
         String value = jedis.get("value");
         //System.out.println(value);
         jedis.close();
-        if(value.length()>0)
+        if(value.equals("false"))
                 return "/admin/feature";
         else
                 return "/admin/users";
